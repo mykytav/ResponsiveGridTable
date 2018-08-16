@@ -1,0 +1,313 @@
+$background: #222d3f;
+$headingColor: #6d86b2;
+$itemBackground: #192332;
+$itemBackgroundHover: #405474;
+$itemBorderBottom: #0c121b;
+$deleteIconBackgroundHover: #f4373b;
+$deleteIcon: #872d37;
+$questionBackground: #2d3b52;
+$questionButtonHoverBackground: #366a37;
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: $background;
+  font: 100% Helvetica, sans-serif;
+  background-size: 100%;
+  min-height: 100vh;
+  padding-top: 50px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 640px;
+  margin: 0px auto;
+}
+
+.heading {
+  display: grid;
+  grid-template-columns: repeat(24, 1fr);
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 0px 12px;
+  color: $headingColor;
+  span {
+    padding-left: 5px;
+  }
+  &__name {
+    padding-left: 15px;
+    grid-column: span 10;
+  }
+  &__age {
+    grid-column: span 5;
+  }
+  &__zodiac {
+    grid-column: span 5;
+  }
+  &__action {
+    grid-column: span 4;
+  }
+}
+
+.borders {
+  border-bottom: 2px solid $itemBackground;
+  border-top: 2px solid $itemBackground;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.list {
+  list-style-type: none;
+  overflow-y: scroll;
+  height: 314px;
+  margin: 2px 0px;
+}
+
+.list__item {
+  $self: &;
+  display: grid;
+  grid-template-columns: repeat(24, 1fr);
+  height: 40px;
+  border-bottom: 1px solid $itemBorderBottom;
+  background: $itemBackground;
+  transition: all 0.5s ease;
+  color: #fff;
+  span {
+    padding: 0px 15px;
+    display: flex;
+    align-items: center;
+    word-break: break-all;
+  }
+  &:hover {
+    background: $itemBackgroundHover;
+    margin-left: -25px;
+    position: relative;
+    i {
+      color: #fff;
+    }
+    #{ $self }_action {
+      background: $deleteIconBackgroundHover;
+      grid-column: span 4;
+      padding: 0px 18px;
+      align-items: center;
+      cursor: pointer;
+      border-left: 1px solid #000;
+      z-index: 2;
+    }
+    #{ $self }_action:before {
+      content: 'DELETE';
+      color: #fff;
+      margin-right: 5px;
+      font-size: 12px;
+    }
+    #{ $self }_zodiac {
+      grid-column: span 5;
+    }
+  }
+}
+
+.list__item_action {
+  padding: 0px 8px;
+  grid-column: span 2;
+  transition: all 0.5s ease;
+  color: #000;
+  i {
+    color: $deleteIcon;
+    height: 30px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.list__item_name {
+  grid-column: span 10;
+  margin-left: 12px;
+}
+
+.list__item_age {
+  grid-column: span 5;
+}
+
+.list__item_zodiac {
+  grid-column: span 7;
+}
+
+.question {
+  display: flex;
+  align-items: center;
+  width: 80%;
+  margin: -3px auto 5px auto;
+  color: #fff;
+  height: 40px;
+  opacity: 0;
+  animation: fadeInFromLeft 0.5s ease 0.3s forwards;
+  &__text {
+    flex: 1;
+    background: $questionBackground;
+    padding-left: 30px;
+    border-bottom-left-radius: 10px;
+    line-height: 17px;
+    padding: 9px;
+  }
+  &__button {
+    padding: 10px;
+    line-height: 15px;
+    background: $questionBackground;
+    outline: 0;
+    border: 0;
+    border-left: 1px solid #000;
+    transition: all 0.25s ease-in-out;
+    color: #fff;
+    &:hover {
+      padding: 10px;
+      background: $questionButtonHoverBackground;
+      cursor: pointer;
+    }
+  }
+  &__button_yes {
+    border-bottom-right-radius: 10px;
+    &:hover {
+      border-bottom-right-radius: 10px;
+    }
+  }
+}
+
+@keyframes fadeInFromLeft {
+  from {
+    transform: translateX(50%) scale(0.8);
+  }
+  to {
+    transform: translateX(0%) scale(1);
+    opacity: 1;
+  }
+}
+
+.fadeOut {
+  opacity: 1;
+  animation: fadeOutToLeft 0.5s ease 0.3s forwards;
+}
+
+@keyframes fadeOutToLeft {
+  from {
+    transform: translateX(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(50%) scale(0.8);
+  }
+}
+
+@media all and (max-width: 640px) {
+  .wrapper {
+    width: 100%;
+  }
+
+  .borders {
+    width: 90%;
+  }
+
+  .heading {
+    width: 90%;
+  }
+
+  .list__item {
+    &:hover {
+      margin-left: -16px;
+      .list__item_action:before {
+        content: '';
+      }
+      .list__item_action {
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+
+  .list__item_action {
+    display: flex;
+    justify-content: center;
+  }
+
+  .question {
+    width: 90%;
+    &__text {
+      font-size: 14px;
+    }
+  }
+}
+
+@media all and (max-width: 480px) {
+  .list__item {
+    height: 60px;
+    &:hover {
+      .list__item_zodiac {
+        grid-column: span 8;
+      }
+      .list__item_action {
+        justify-content: center;
+        align-items: center;
+        padding: 0px 15px 0px 14px;
+        grid-column: span 4;
+      }
+    }
+  }
+
+  .list__item_action {
+    grid-column: span 4;
+  }
+
+  .list__item_name {
+    grid-column: span 8;
+  }
+
+  .list__item_age {
+    grid-column: span 4;
+  }
+
+  .list__item_zodiac {
+    grid-column: span 8;
+  }
+
+  .heading__name {
+    grid-column: span 8;
+  }
+
+  .heading__age {
+    grid-column: span 4;
+  }
+
+  .heading__zodiac {
+    grid-column: span 8;
+  }
+
+  .heading__action {
+    grid-column: span 4;
+  }
+
+  .question {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    &__text {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      align-self: stretch;
+      padding: 0;
+      margin: 0;
+      line-height: 20px;
+      text-align: center;
+    }
+    &__button {
+      line-height: 20px;
+      font-size: 16px;
+    }
+  }
+}
