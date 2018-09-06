@@ -1,27 +1,41 @@
 const deleteSpan = document.querySelectorAll('.list__item_action');
 
+const styleQuestionLi = el => {
+  el.classList.add('question');
+  el.innerHTML = `
+    <p class="question__text">Are you sure you want to remove this item?</p>
+    <button class="question__button question__button_no">NO</button>
+    <button class="question__button question__button_yes">YES</button>
+    `;
+  return el;
+};
+
+const styleLastQuestionLi = () => {
+  const liQuestionText = document.querySelector('.question__text');
+  liQuestionText.style.borderBottomLeftRadius = '0px';
+  liQuestionText.style.borderTopLeftRadius = '10px';
+
+  return liQuestionText;
+};
+
+const styleLastQuestionLiYesButton = () => {
+  const liQuestionYesButton = document.querySelector('.question__button_yes');
+  liQuestionYesButton.style.borderBottomRightRadius = '0px';
+  liQuestionYesButton.style.borderTopRightRadius = '10px';
+
+  return liQuestionYesButton;
+};
+
 const handleDeleteClick = e => {
-  // create li with proper html
   const li = document.createElement('li');
-  li.classList.add('question');
-  li.innerHTML = `
-  <p class="question__text">Are you sure you want to remove this item?</p>
-  <button class="question__button question__button_no">NO</button>
-  <button class="question__button question__button_yes">YES</button>
-  `;
+  styleQuestionLi(li);
 
   // if it is a last li show question before it
   if (e.currentTarget.parentNode.nextElementSibling === null) {
     e.currentTarget.parentNode.before(li);
     document.querySelector('.question').style.margin = '5px auto 0px auto';
-
-    const liQuestionText = document.querySelector('.question__text');
-    liQuestionText.style.borderBottomLeftRadius = '0px';
-    liQuestionText.style.borderTopLeftRadius = '10px';
-
-    const liQuestionYesButton = document.querySelector('.question__button_yes');
-    liQuestionYesButton.style.borderBottomRightRadius = '0px';
-    liQuestionYesButton.style.borderTopRightRadius = '10px';
+    styleLastQuestionLi();
+    styleLastQuestionLiYesButton();
   } else {
     // otherwise after it
     e.currentTarget.parentNode.after(li);
@@ -31,7 +45,6 @@ const handleDeleteClick = e => {
 
   const noButtons = document.querySelectorAll('.question__button_no');
   const yesButtons = document.querySelectorAll('.question__button_yes');
-
   noButtons.forEach(button =>
     button.addEventListener('click', handleNoButtonsClick)
   );
